@@ -1,0 +1,84 @@
+This is the Orange Pi Linux system build script.
+You can use this script to compile the Linux system that can run on the Orange Pi.
+==================================================================================
+#
+#
+	This SDK is made up of cazure, welcome to visit the website http://soilhead.cn
+	SDK page is http://soilhead.cn/static/orangepi/sdk.html
+#
+#
+==================================================================================
+Usage method :
+
+  ./config.sh
+  ./orangepi.sh make/build/config/pack/clean
+
+build targets:
+  ./config.sh
+  ./orangepi.sh make kernel		- Build the kernel
+  ./orangepi.sh make uboot		- Build the uboot
+  ./orangepi.sh make busybox		- Build the busybox
+  ./orangepi.sh config kernel		- menuconfig kernel
+  ./orangepi.sh config uboot     	- menuconfig uboot
+  ./orangepi.sh config busybox		- menuconfig busybox
+
+  ./orangepi.sh build rootfs	- Build debian & ubuntu file system
+  ./orangepi.sh build partition	- Build SDcard image and partition
+  ./orangepi.sh install uboot 	- Install uboot to SDcard
+  ./orangepi.sh install kernel	- Install kernel to SDcard
+  ./orangepi.sh install rootfs	- Install rootfs to SDcard
+  
+  ./orangepi.sh clean 
+
+
+Example:
+	
+	./config.sh
+	./orangepi.sh make
+	./orangepi.sh build
+	./orangepi.sh install
+
+=====================================================================================
+This directory contains the source code , compile tool and config file  for orange pi.
+>>>>>>>>>>>>>>>>>>
+Directory Hierarchy :
+	/	sdk root Directory
+	+--/config 
+	|	+--/apt-source				
+	|   +--/kernel				#linux kernel config file					
+	|   +--/system-etc
+	|   +--/u-boot				#uboot config file
+	|   +--/orangepi_config			#orangepi common config file
+	|
+	+--/doc   AW-H3 Document 
+	|
+	+--/source
+	|	+--/linux-*		#linux source
+	|	+--/u-boot-*	#u-boot source
+	|	+--/busybox-*	#busybox source
+	|	+--/u-boot-script
+	|	+--/sunxi-script
+	|
+	+--/script
+	|	+--/build_*		#build script
+	|	+--/make_*		#make script
+	|	+--/install_*	#install script
+	|	+--/pack_*		#pack script
+	|
+	+--/toolchain
+	|	+--/gcc-linaro-arm-linux-gnueabihf-4.8
+	|	+--/sunxi-tools
+	|
+	+--/output
+	|	+--/dtb
+	|	+--/kernel
+	|	+--/rootfs
+	|	+--/sdcard
+	|	+--/u-boot
+	|
+	+--/config.sh  			#config script
+	+--/orangepi.sh			#build script
+	+--/ERADME
+
+<<<<<<<<<<<<<<<<<<<<<<
+==============================================================================

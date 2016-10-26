@@ -1,0 +1,82 @@
+#!/bin/bash
+# Last update: 2016-08-29
+if [ "$(id -u)" != "0" ]; then
+   echo "Script must be run as root !"
+   exit 0
+fi
+echo ""
+date
+echo -e "================================================="
+echo -e "Creating Ubuntu/Debian SD Card Image for OrangePI"
+echo -e "================================================="
+echo ""
+image_name=orangepi
+image_file=$PWD/$image_name.img
+image_size=1024
+boot_size=100
+boot_start=40960
+create=0
+
+if [ ! -f $image_file ]
+then
+create=1
+echo "create image file , Please wait some time"
+dd if=/dev/zero of=$image_file bs=M count=$image_size
+fi
+image_sectors=`fdisk -l $image_file | grep "Disk $image_file" | awk '{print $7}'`
+image_bytes=`fdisk -l $image_file | grep "Disk $image_file" | awk '{print $5}'`
+image_block=$(expr $image_bytes / $image_sectors )
+block_size=$(expr 1024 \* 1024 / $image_block )
+
+root_size=$(expr  $image_size - $boot_size - $(expr $boot_start / $block_size ) )
+boot_end=$(expr $boot_start + $(expr $boot_size \* $block_size ) - 1)
+root_start=$(expr $boot_end + 1)
+root_end=$(expr $(expr $root_size \* $block_size ) + $root_start - 1 )
+
+if [ $create == 1  ]
+then
+echo ""
+echo " fdisk image........"
+echo " Image total size :   $image_size M"
+echo " boot partition size: $boot_size M"
+echo " root partition size: $root_size M"
+echo " boot start : $boot_start"
+echo " boot end   : $boot_end"
+echo " root start : $root_start"
+echo " root end   : $root_end"
+echo -e "n\np\n1\n${boot_start}\n${boot_end}\nt\nb\nw\n" | fdisk $image_file > /dev/null 2>&1
+echo -e "n\np\n2\n${root_start}\n${root_end}\nw\n" | fdisk $image_file > /dev/null 2>&1 
+fdisk -l $image_file
+echo ""
+fi
+
+
+echo " losetup......."
+boot_offset=$(expr $boot_start \* $image_block )
+boot_sizelimit=$(expr $(expr $boot_end - $boot_start ) \* $image_block )
+losetup --offset ${boot_offset} --sizelimit ${boot_sizelimit} -f  $image_file
+
+root_offset=$(expr $root_start \* $image_block )
+root_sizelimit=$(expr $(expr $root_end - $root_start) \* $image_block )
+losetup --offset ${root_offset} --sizelimit $root_sizelimit -f  $image_file
+
+boot_loop_dev=`losetup | grep $boot_offset | awk '{print $1}'`
+root_loop_dev=`losetup | grep $root_offset | awk '{print $1}'`
+losetup | grep $boot_offset
+losetup | grep $root_offset
+echo ""
+
+if [ $create == 1  ]
+then
+echo "mkfs image"
+mkfs.vfat $boot_loop_dev
+mkfs.ext4 $root_loop_dev
+echo ""
+fi
+
+echo "mount image"
+mkdir -p $PWD/output/_boot $PWD/output/_root
+mount -t vfat $boot_loop_dev $PWD/output/_boot
+mount -t ext4 $root_loop_dev $PWD/output/_root
+#losetup -d $boot_loop_dev
+#losetup -d $root_loop_dev

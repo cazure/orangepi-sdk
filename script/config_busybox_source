@@ -1,0 +1,23 @@
+#!/bin/bash
+message "check busybox soucre ...."
+if [ ! -d ${OPI_B_source} ]
+then
+	message "soucre not foud !"
+	exit 0
+fi
+
+message "entry busybox source dir " && cd ${OPI_B_source}
+
+if [ ! -f .config ]
+then 
+	message "clear   busybox " && make distclean
+	message "cpoy $BOARD config file" && cp ${OPI_WORK_DIR}/config/busybox/orangepi  ${OPI_B_source}/.config
+	message "config  busybox " && make oldconfig
+fi
+
+#configuboot
+message "config busybox" && make menuconfig
+echo ""
+message "config busybox finish,Please run './orangepi.sh make busybox'" 
+echo "^_^"
+

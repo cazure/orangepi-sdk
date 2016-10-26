@@ -1,0 +1,8 @@
+source/linux-3.4.112/*
+!source/linux-3.4.112/README*
+source/u-boot-2016.7/*
+!source/u-boot-2016.7/README*
+source/busybox-1.25/*
+!source/busybox-1.25/README*
+toolchain/gcc-linaro-arm-linux-gnueabihf-4.8/*
+!toolchain/gcc-linaro-arm-linux-gnueabihf-4.8/README*

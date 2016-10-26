@@ -1,0 +1,32 @@
+#!/bin/bash
+message "check busybox soucre ...."
+if [ ! -d $OPI_B_source ]
+then
+	message "soucre not foud !"
+	exit 0
+fi
+
+message "entry busybox source dir " && cd $OPI_B_source
+
+if [ ! -f .config ]
+then 
+	message "clear   busybox " && make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- distclean 
+	message "cpoy $BOARD config file" && cp ${OPI_WORK_DIR}/config/busybox/orangepi  ${OPI_B_source}/.config
+	message "config  busybox " && make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- oldconfig
+fi
+
+#build uboot
+echo ""
+date
+message "build busybox, Please wait some time." && make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j8
+#message "install busybox" && make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- install
+
+if [ -f busybox  ]; then
+	# Copy u-boot-sunxi-with-spl.bin to output
+    cp busybox  $OPI_BUSYBOX_OUTPUT_DIR 
+fi 
+echo ""
+
+date
+message "build busybox finish,Please to see $OPI_BUSYBOX_OUTPUT_DIR directories" 
+echo "^_^"

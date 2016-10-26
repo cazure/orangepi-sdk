@@ -1,0 +1,24 @@
+#!/bin/bash
+message "check kernel soucre ...."
+if [ ! -d ${OPI_K_source} ]
+then
+	message "kernel soucre not foud !"
+	message "not foud ${OPI_K_source}!"
+	exit 0
+fi
+
+message "entry kernel source dir " && cd ${OPI_K_source}
+
+if [ ! -f .config ]
+then 
+	message "clear   kernel " && make distclean
+	message "cpoy $BOARD config file" && cp ${OPI_WORK_DIR}/config/kernel/$BOARD  ${OPI_K_source}/arch/arm/configs/${OPI_K_config}
+	message "config $BOARD kernel " && make ${OPI_K_config}
+fi
+
+##build kernel
+message "config kernel..." && make menuconfig
+echo ""
+message "config kernel finish,Please run './orangepi.sh make kernel'" 
+echo "^_^"
+

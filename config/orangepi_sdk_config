@@ -1,0 +1,74 @@
+#!/bin/bash
+export ARCH=arm
+export CROSS_COMPILE=arm-linux-gnueabihf-
+
+#export BOARD=orangepi
+#export PLATFORM=sun8iw7p1
+U_version=2016.07
+K_version=3.4.112
+B_version=1.25.0
+export OPI_OUTPUT_DIR=${OPI_WORK_DIR}/output
+export OPI_source=${OPI_WORK_DIR}/source
+export OPI_U_source=${OPI_source}/u-boot-$U_version
+export OPI_K_source=${OPI_source}/linux-$K_version
+export OPI_B_source=${OPI_source}/busybox-$B_version
+#export PATH=${OPI_WORK_DIR}/toolchain/gcc-linaro/bin:$PATH
+export PATH=${OPI_WORK_DIR}/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8/bin:$PATH
+
+export OPI_K_config=sun8iw7p1smp_linux_defconfig
+export OPI_U_config=orangepi_linux_defconfig
+
+export OPI_device_tree=sun8i-h3-orangepi-linux
+export OPI_uboot_loadaddr=0x48000000
+export LOADADDR=${OPI_uboot_loadaddr}
+
+export OPI_UBOOT_OUTPUT_DIR=${OPI_OUTPUT_DIR}/u-boot
+export OPI_KERNEL_OUTPUT_DIR=${OPI_OUTPUT_DIR}/kernel
+export OPI_BUSYBOX_OUTPUT_DIR=${OPI_OUTPUT_DIR}/busybox
+export OPI_DTB_OUTPUT_DIR=${OPI_OUTPUT_DIR}/dtb
+export INSTALL_MOD_PATH=${OPI_KERNEL_OUTPUT_DIR}
+export INSTALL_HDR_PATH=${OPI_KERNEL_OUTPUT_DIR}/usr
+
+export OPI_SYSTEM_OUTPUT_DIR=${OPI_OUTPUT_DIR}/rootfs
+#export OPI_SYSTEM_TYPE=debian
+#export OPI_SYSTEM_VERSION=jessie
+
+export OPI_SDCARD_BOOT_START=2048
+export OPI_SDCARD_BOOT_SIZE=128
+export OPI_SDCARD_BOOT=${OPI_OUTPUT_DIR}/sdcard/boot
+export OPI_SDCARD_ROOT=${OPI_OUTPUT_DIR}/sdcard/root
+
+
+#debian source list
+#Debian 8 ("jessie") — current stable release
+#Debian 7 ("wheezy") — obsolete stable release
+#Debian 6.0 ("squeeze") — obsolete stable release
+#
+#http://ftp2.cn.debian.org/debian/
+#http://ftp.cn.debian.org/debian/
+#http://debian.bjtu.edu.cn/debian/
+#http://mirrors.cug.edu.cn/debian/
+#http://mirrors.hust.edu.cn/debian/
+#http://mirrors.tuna.tsinghua.edu.cn/debian/
+#http://mirrors.ustc.edu.cn/debian/
+#
+
+
+#ubuntu source list
+#ubuntu 16.04 ("xenial")
+#ubuntu 15.10 ("willy")
+#ubuntu 14.04 ("trusty")
+#http://cn.archive.ubuntu.com/ubuntu/
+#https://mirrors.ustc.edu.cn/ubuntu/ (v4/v6) 
+#http://mirrors4.ustc.edu.cn/ubuntu/ (v4) 
+#http://mirrors6.ustc.edu.cn/ubuntu/ (v6)
+#http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ (v4/v6) 
+#http://mirrors.4.tuna.tsinghua.edu.cn/ubuntu/ (v4) 
+#http://mirrors.6.tuna.tsinghua.edu.cn/ubuntu/ (v6)
+#http://mirrors.163.com/ubuntu/
+#http://mirrors.sohu.com/ubuntu/
+#http://mirrors.aliyun.com/ubuntu/
+#
+
+
+
