@@ -27,12 +27,14 @@ if [ -f u-boot-sunxi-with-spl.bin  ]; then
 fi 
 echo ""
 date
-message "build u-boot boot.scr" && rm -rf $OPI_UBOOT_OUTPUT_DIR/boot.scr
+message "build u-boot boot.scr" && rm -rf $OPI_UBOOT_OUTPUT_DIR/boot.scr  $OPI_UBOOT_OUTPUT_DIR/boot.cmd
 mkimage -C none -A arm -T script -d $OPI_source/u-boot-script/orangepi.cmd $OPI_UBOOT_OUTPUT_DIR/boot.scr 
+cp $OPI_source/u-boot-script/orangepi.cmd $OPI_UBOOT_OUTPUT_DIR/boot.cmd 
 echo ""
 date
-message "build sunxi script.bin" && rm -rf $OPI_UBOOT_OUTPUT_DIR/script.bin
+message "build sunxi script.bin" && rm -rf $OPI_UBOOT_OUTPUT_DIR/script.bin $OPI_UBOOT_OUTPUT_DIR/script.fex
 fex2bin $OPI_source/sunxi-script/orangepi.fex  $OPI_UBOOT_OUTPUT_DIR/script.bin
+cp $OPI_source/sunxi-script/orangepi.fex  $OPI_UBOOT_OUTPUT_DIR/script.fex 
 echo ""
 date
 message "build u-boot finish,Please to see $OPI_UBOOT_OUTPUT_DIR directories" 
