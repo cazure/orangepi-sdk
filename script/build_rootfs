@@ -1,30 +1,34 @@
 #!/bin/bash
 HOSTNAME="orangepi"
 rootfs=$OPI_SYSTEM_OUTPUT_DIR
-system=$1
-version=$2
+system=$OPI_SYSTEM_TYPE
+version=$OPI_SYSTEM_VERSION
 mirror=
 
+if [ "$(id -u)" != "0" ]; then
+   echo "Script must be run as root !"
+   exit 0
+fi
 	# $1 debian ubuntu  $2 version
 if  [[ $system == "debian" ]] ; then
-	case  "$3"  in   
+	case  "$version"  in   
  	jessie ) 
-		mirror="http://ftp.cn.debian.org/debian/"		
+		mirror="http://mirrors.aliyun.com/debian/"		
 		;;
 	wheezy ) 
-		mirror="http://ftp.cn.debian.org/debian/"				
+		mirror="http://mirrors.aliyun.com/debian/"				
 		;;
 	esac
 elif [[ $system == "ubuntu" ]] ; then
-	case  "$3"  in
+	case  "$version"  in
 	xenial )
-		mirror=	
+		mirror=	http://mirrors.aliyun.com/ubuntu/
 		;;
 	vivid ) 
-		mirror=	
+		mirror=	http://mirrors.aliyun.com/ubuntu/
 		;;
 	trusty ) 
-		mirror=
+		mirror=http://mirrors.aliyun.com/ubuntu/
 		;;
 	esac
 elif [[ $system == "" ]] ; then
@@ -33,24 +37,16 @@ elif [[ $system == "" ]] ; then
 fi
 
 message "check installed software ....."
-soft=`dpkg -l debootstrap`
-if [ ! $? -eq 0 ]
-then
-	message "not found debootstrap!!!!"
 	apt-get install -y -q binfmt-support qemu qemu-user-static debootstrap
-else
-    echo ""
-fi
+echo ""
 message " entry root file system dir " && cd $rootfs
 echo ""
 
 #debootstrap
 message " run debootstrap...."
-sudo debootstrap --foreign --arch armhf $version $rootfs $mirror
+debootstrap --foreign --arch armhf $version $rootfs $mirror
 echo ""
-sudo cp /usr/bin/qemu-arm-static $rootfs/usr/bin
-cp $rootfs/../../script/make_rootfs_last_stage.sh  $rootfs/init.sh 
-chmod 755 $rootfs/init.sh 
+cp /usr/bin/qemu-arm-static $rootfs/usr/bin
 
 #set qemu
 export LC_ALL=C 
@@ -59,16 +55,27 @@ export LANG=C
 export DEBCONF_NONINTERACTIVE_SEEN=true 
 export DEBIAN_FRONTEND=noninteractive
 
-#debootstrap second-stage
-sudo chroot $rootfs  /debootstrap/debootstrap --second-stage
+echo "debootstrap second-stage"
+chroot $rootfs  /debootstrap/debootstrap --second-stage
+
+cp $rootfs/../../config/apt-source/sources.list.$version  $rootfs/etc/apt/sources.list
+if  [[ $system == "debian" ]] ; then
+cp $rootfs/../../script/make_rootfs_last_stage_debian.sh  $rootfs/init.sh
+elif [[ $system == "ubuntu" ]] ; then
+cp $rootfs/../../script/make_rootfs_last_stage_ubuntu.sh  $rootfs/init.sh 
+fi
+chmod 755 $rootfs/init.sh 
+echo ""
+echo "debootstrap last-stage"
+chroot $rootfs  /init.sh
 echo ""
 
-sudo chroot $rootfs  /init.sh	
-cat >> $rootfs/OrangePi << _EOF_
-system : $system
-version : $version 
-mirror : $mirror
-_EOF_
+times='date'
+echo "system : $system " > $rootfs/OrangePi
+echo "version : $version " >> $rootfs/OrangePi
+echo "mirror : $mirror" >> $rootfs/OrangePi
+echo "build time : $times" >> $rootfs/OrangePi
+
 echo ""
 message "make rootfs finish,Please to see $rootfs directories" 
 echo "^_^"
