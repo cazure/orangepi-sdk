@@ -1,5 +1,0 @@
-#!/bin/bash
-export BOARD=orangepi
-export PLATFORM=sun8iw7p1
-export OPI_SYSTEM_TYPE=debian
-export OPI_SYSTEM_VERSION=jessie
