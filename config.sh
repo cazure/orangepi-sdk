@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "config Orange Pi SDK "
-echo ""
-sleep 0.3
+echo ""	
 echo "##########################################"
 echo "The optional board has "
 #echo "	[1].orange pi zero 32bit"
@@ -82,8 +81,11 @@ case "$model" in
 	;;
 esac
 
+if [[ ! -f board_config ]] ;then
+. ./script/orangepi_sdk_init
 touch ./board_config
 chmod a+x ./board_config
+fi
 echo "#!/bin/bash" > ./board_config
 echo "export BOARD=$board" >> ./board_config
 echo "export PLATFORM=$platform" >> ./board_config

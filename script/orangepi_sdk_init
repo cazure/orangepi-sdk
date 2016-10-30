@@ -1,37 +1,6 @@
 #!/bin/bash
-source $PWD/script/orangepi.conf
-source $PWD/script/common.sh
-
-cat >> orangepi << _EOF_
-date
-_EOF_
-#!/bin/bash
-echo $!
-if [[ $2 == "" ]] ;then
-	str="Please wait some time"
-else
-	str=$2
-fi
-echo $str
-while kill -0 $1 2>/dev/null
-do
-	i=0
-	b=''
-	while [ $i -le  100 ]
-	do
-	    printf "[%-50s]%d%%  \r" $b $i
-	    sleep 0.01
-	    i=`expr 2 + $i`       
-	    b=">"$b
-	done
-	
-done
-if [ $? -eq 0 ]
-then	
-  printf "OK.   %-50s \r\n" 
-else
-  printf "ERROR.%-50s \r\n" 
-  exit 1
-fi
-
-
+mkdir -p ./output/rootfs
+mkdir -p ./output/sdcard
+mkdir -p ./output/kernel
+mkdir -p ./output/uboot
+mkdir -p ./output/dtb
