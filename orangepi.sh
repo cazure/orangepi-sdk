@@ -70,48 +70,56 @@ elif [[ $1 == "config" ]] ; then
 		. $PWD/script/config_busybox_source
 		;;
 	esac
-elif [[ $1 == "install" ]] ; then
-	case  "$2"  in
-	kernel )
-		echo "+++++config uboot and kernel +++++" 
-		. $PWD/script/config_kernel_source	
-		;;
-	uboot )
-		echo "+++++config uboot and kernel +++++" 
-		. $PWD/script/config_kernel_source	
-		;;
-	rootfs )
-		echo "+++++config uboot and kernel +++++" 
-		. $PWD/script/config_kernel_source	
-		;;
-	* )
-		echo "+++++config uboot and kernel +++++" 
-		. $PWD/script/config_kernel_source	
-		;;
-	esac
 elif [[ $1 == "build" ]] ; then
 	case  "$2"  in
 	rootfs )
-		echo "Script run sudo , Please authorize :"
-		. $PWD/script/build_rootfs $OPI_SYSTEM_TYPE $OPI_SYSTEM_VERSION 2>&1 | tee $OPI_OUTPUT_DIR/build_rootfs.log	
+		echo "build  rootfs , Please wait... :"
+		echo "build $OPI_SYSTEM_TYPE $OPI_SYSTEM_VERSION system rootfilesystem"
+		. $PWD/script/build_rootfs 2>&1 | tee $OPI_OUTPUT_DIR/build_rootfs.log	
 		;;
-	partition )
-		mirror=	
+	image )	
+		echo "build image , Please wait... :"
+		. $PWD/script/build_image 2>&1 | tee $OPI_OUTPUT_DIR/build_image.log	
+		;;	
+	bootimage )	
+		echo "build boot image , Please wait... :"
+		. $PWD/script/build_bootimage 2>&1 | tee $OPI_OUTPUT_DIR/build_bootimage.log	
 		;;
 	* ) 
-		mirror=
+		echo "Please run 'sudo ./orangepi.sh build [rootfs|image|bootimage]' "
+		;;
+	esac
+elif [[ $1 == "pack" ]] ; then
+	case  "$2"  in
+	kernel )
+		echo "+++++pack kernel +++++" 
+		. $PWD/script/pack_kernel
+		;;
+	uboot )
+		echo "+++++pack uboot+++++" 
+		. $PWD/script/pack_uboot
+		;;
+	rootfs )
+		echo "+++++pack rootfilesystem +++++" 
+		. $PWD/script/pack_rootfs
+		;;
+	* )
+		echo "+++++pack uboot kernel and  rootfs +++++" 
+		. $PWD/script/pack_uboot
+		. $PWD/script/pack_kernel
+		. $PWD/script/pack_rootfs
 		;;
 	esac
 elif [[ $1 == "clean" ]] ; then
 	echo "clear sdk..."
 	case  "$2"  in
 	kernel )
-		rm -rf output/kernel/*
+		#rm -rf output/kernel/*
 		cd $OPI_K_source && make  distclean
 		;;
 	uboot )
-		rm -rf output/dtb/*
-		rm -rf output/u-boot/*
+		#rm -rf output/dtb/*
+		#rm -rf output/u-boot/*
 		cd $OPI_U_source && make  distclean
 		;;
 	rootfs ) 
@@ -119,7 +127,7 @@ elif [[ $1 == "clean" ]] ; then
 		rm -rf output/sdcard/*
 		;;
 	busybox ) 
-		rm -rf output/busybox/*
+		#rm -rf output/busybox/*
 		cd $OPI_B_source && make  distclean
 		;;
 	* )		
@@ -130,6 +138,7 @@ elif [[ $1 == "clean" ]] ; then
 		rm -rf output/rootfs/*
 		rm -rf output/sdcard/*
 		rm -rf output/*.log
+		rm -rf output/*.img
 		cd $OPI_K_source && make  distclean
 		cd $OPI_U_source && make  distclean
 		cd $OPI_B_source && make  distclean
@@ -138,8 +147,6 @@ elif [[ $1 == "clean" ]] ; then
 	echo "clear finish..."
 fi
 
-
-
-echo ""
+echo "***** script run finish *****"
 exit 0
 

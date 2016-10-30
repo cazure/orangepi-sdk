@@ -1,11 +1,9 @@
 #!/bin/bash
-source $PWD/script/orangepi.conf
-source $PWD/script/common.sh
 sdcard=$1
 message "check uboot ...."
 if [ ! -f ${OPI_UBOOT_OUTPUT_DIR}/u-boot-sunxi-with-spl.bin  ]
 then
-	message "u-boot-sunxi-with-spl.bin   not foud !"
+	message "${OPI_UBOOT_OUTPUT_DIR}/u-boot-sunxi-with-spl.bin not foud !"
 	exit 0
 fi
 

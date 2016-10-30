@@ -6,6 +6,7 @@ export CROSS_COMPILE=arm-linux-gnueabihf-
 #export PLATFORM=sun8iw7p1
 U_version=2016.07
 K_version=3.4.112
+#K_version=4.8
 B_version=1.25.0
 export OPI_OUTPUT_DIR=${OPI_WORK_DIR}/output
 export OPI_source=${OPI_WORK_DIR}/source
@@ -13,7 +14,8 @@ export OPI_U_source=${OPI_source}/u-boot-$U_version
 export OPI_K_source=${OPI_source}/linux-$K_version
 export OPI_B_source=${OPI_source}/busybox-$B_version
 #export PATH=${OPI_WORK_DIR}/toolchain/gcc-linaro/bin:$PATH
-export PATH=${OPI_WORK_DIR}/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8/bin:$PATH
+toolchain=${OPI_WORK_DIR}/toolchain/gcc-linaro-arm-linux-gnueabihf-4.8/bin
+export PATH=$toolchain:$PATH
 
 export OPI_K_config=sun8iw7p1smp_linux_defconfig
 export OPI_U_config=orangepi_linux_defconfig
