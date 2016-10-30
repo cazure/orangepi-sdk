@@ -56,20 +56,18 @@ export DEBCONF_NONINTERACTIVE_SEEN=true
 export DEBIAN_FRONTEND=noninteractive
 
 echo "debootstrap second-stage"
-DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \ 
-LC_ALL=C LANGUAGE=C LANG=C chroot $rootfs /debootstrap/debootstrap --second-stage
+DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C chroot $rootfs /debootstrap/debootstrap --second-stage
 
 cp -rf $rootfs/../../config/apt-source/sources.list.$version  $rootfs/etc/apt/sources.list
 if  [[ $system == "debian" ]] ; then
-cp -rf $rootfs/../../script/make_rootfs_last_stage_debian  $rootfs/init.sh
+cp -rf $rootfs/../../script/build_rootfs_last_stage_debian  $rootfs/init.sh
 elif [[ $system == "ubuntu" ]] ; then
-cp -rf $rootfs/../../script/make_rootfs_last_stage_ubuntu  $rootfs/init.sh 
+cp -rf $rootfs/../../script/build_rootfs_last_stage_ubuntu  $rootfs/init.sh 
 fi
 chmod 755 $rootfs/init.sh 
 echo ""
 echo "debootstrap last-stage"
-DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \ 
-LC_ALL=C LANGUAGE=C LANG=C chroot $rootfs /init.sh
+DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true LC_ALL=C LANGUAGE=C LANG=C chroot $rootfs /init.sh
 echo ""
 
 times='date'
