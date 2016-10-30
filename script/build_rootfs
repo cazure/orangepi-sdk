@@ -13,10 +13,10 @@ fi
 if  [[ $system == "debian" ]] ; then
 	case  "$version"  in   
  	jessie ) 
-		mirror="http://mirrors.aliyun.com/debian/"		
+		mirror="http://ftp.cn.debian.org/debian"		
 		;;
 	wheezy ) 
-		mirror="http://mirrors.aliyun.com/debian/"				
+		mirror="http://ftp.cn.debian.org/debian"				
 		;;
 	esac
 elif [[ $system == "ubuntu" ]] ; then

@@ -1,11 +1,11 @@
-deb http://mirrors.aliyun.com/debian/ jessie main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian/ jessie main contrib non-free
+deb http://ftp.cn.debian.org/debian/ jessie main contrib non-free
+#deb-src http://ftp.cn.debian.org/debian/ jessie main contrib non-free
 
-deb http://mirrors.aliyun.com/debian/ jessie-updates main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian// jessie-updates main contrib non-free
+deb http://ftp.cn.debian.org/debian/ jessie-updates main contrib non-free
+#deb-src http://ftp.cn.debian.org/debian// jessie-updates main contrib non-free
 
-deb http://mirrors.aliyun.com/debian/ jessie-backports main contrib non-free
-#deb-src http://mirrors.aliyun.com/debian/ jessie-backports main contrib non-free
+deb http://ftp.cn.debian.org/debian/ jessie-backports main contrib non-free
+#deb-src http://ftp.cn.debian.org/debian/ jessie-backports main contrib non-free
 
 deb http://security.debian.org/ jessie/updates main contrib non-free
 #deb-src http://security.debian.org/ jessie/updates main contrib non-free
