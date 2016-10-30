@@ -9,14 +9,14 @@ if [ "$(id -u)" != "0" ]; then
    echo "Script must be run as root !"
    exit 0
 fi
-	# $1 debian ubuntu  $2 version
+
 if  [[ $system == "debian" ]] ; then
 	case  "$version"  in   
  	jessie ) 
-		mirror="http://ftp.cn.debian.org/debian"		
+		mirror=http://ftp.cn.debian.org/debian/
 		;;
 	wheezy ) 
-		mirror="http://ftp.cn.debian.org/debian"				
+		mirror=http://ftp.cn.debian.org/debian/
 		;;
 	esac
 elif [[ $system == "ubuntu" ]] ; then
@@ -44,9 +44,9 @@ echo ""
 
 #debootstrap
 message " run debootstrap...."
-debootstrap --foreign --arch armhf $version $rootfs $mirror
+debootstrap --arch armhf $version $rootfs $mirror
 echo ""
-cp /usr/bin/qemu-arm-static $rootfs/usr/bin
+cp -rf /usr/bin/qemu-arm-static $rootfs/usr/bin
 
 #set qemu
 export LC_ALL=C 
@@ -58,11 +58,11 @@ export DEBIAN_FRONTEND=noninteractive
 echo "debootstrap second-stage"
 chroot $rootfs  /debootstrap/debootstrap --second-stage
 
-cp $rootfs/../../config/apt-source/sources.list.$version  $rootfs/etc/apt/sources.list
+cp -rf $rootfs/../../config/apt-source/sources.list.$version  $rootfs/etc/apt/sources.list
 if  [[ $system == "debian" ]] ; then
-cp $rootfs/../../script/make_rootfs_last_stage_debian.sh  $rootfs/init.sh
+cp -rf $rootfs/../../script/make_rootfs_last_stage_debian.sh  $rootfs/init.sh
 elif [[ $system == "ubuntu" ]] ; then
-cp $rootfs/../../script/make_rootfs_last_stage_ubuntu.sh  $rootfs/init.sh 
+cp -rf $rootfs/../../script/make_rootfs_last_stage_ubuntu.sh  $rootfs/init.sh 
 fi
 chmod 755 $rootfs/init.sh 
 echo ""
