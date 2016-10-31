@@ -13,22 +13,22 @@ fi
 if  [[ $system == "debian" ]] ; then
 	case  "$version"  in   
  	jessie ) 
-		mirror=http://ftp.cn.debian.org/debian/
+		mirror="http://ftp.cn.debian.org/debian/"
 		;;
 	wheezy ) 
-		mirror=http://ftp.cn.debian.org/debian/
+		mirror="http://ftp.cn.debian.org/debian/"
 		;;
 	esac
 elif [[ $system == "ubuntu" ]] ; then
 	case  "$version"  in
 	xenial )
-		mirror=	http://mirrors.aliyun.com/ubuntu/
+		mirror=	"http://mirrors.aliyun.com/ubuntu/"
 		;;
 	vivid ) 
-		mirror=	http://mirrors.aliyun.com/ubuntu/
+		mirror="http://mirrors.aliyun.com/ubuntu/"
 		;;
 	trusty ) 
-		mirror=http://mirrors.aliyun.com/ubuntu/
+		mirror="http://mirrors.aliyun.com/ubuntu/"
 		;;
 	esac
 elif [[ $system == "" ]] ; then

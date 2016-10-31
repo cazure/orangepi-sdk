@@ -35,11 +35,10 @@ export OPI_SYSTEM_OUTPUT_DIR=${OPI_OUTPUT_DIR}/rootfs
 #export OPI_SYSTEM_TYPE=debian
 #export OPI_SYSTEM_VERSION=jessie
 
-export OPI_SDCARD_BOOT_START=2048
-export OPI_SDCARD_BOOT_SIZE=128
-export OPI_SDCARD_BOOT=${OPI_OUTPUT_DIR}/sdcard/boot
-export OPI_SDCARD_ROOT=${OPI_OUTPUT_DIR}/sdcard/root
-
+export OPI_IMAGE_SIZE=2048
+export OPI_IMAGE_BOOT_START=2048
+export OPI_IMAGE_BOOT_SIZE=128
+export OPI_IMAGE_DIR=${OPI_OUTPUT_DIR}/sdcard
 
 #debian source list
 #Debian 8 ("jessie") — current stable release
