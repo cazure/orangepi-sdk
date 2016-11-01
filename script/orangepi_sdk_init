@@ -13,17 +13,22 @@ mkdir -p ./output/dtb
 
 echo ""
 echo "install build and compiler software"
-apt-get update 
-apt-get install -y -qq build-essential lsb-core u-boot-tools sunxi-tools pkg-config 
+echo "apt-get update"
+apt-get update -y -qq 
+echo "###################"
+apt-get install -y -qq build-essential lsb-core u-boot-tools
+#
+apt-get install -y -qq sunxi-tools pkg-config 
 #
 apt-get install -y -qq device-tree-compiler qemu qemu-user-static debootstrap 
 #
-apt-get install -y -qq libncurses5-dev libssl-dev zlib1g-dev libusb-1.0-0-dev
+apt-get install -y -qq libncurses5-dev libssl-dev zlib1g-dev libusb-1.0-0-dev lib32stdc++6
+echo "###################"
 #
 echo ""
-echo "git clone gcc-linaro-arm-linux-guneabihf-4.7"
+echo "git clone gcc-linaro-arm-linux-guneabihf-4.8"
 echo ""
-git clone https://git.oschina.net/cazure/gcc-linaro-arm-linux-guneabihf-4.7.git toolchain/gcc-linaro-arm-linux-guneabihf-4.7
+git clone https://git.oschina.net/cazure/gcc-linaro-arm-linux-guneabihf-4.8.git toolchain/gcc-linaro-arm-linux-guneabihf-4.8
 
 echo ""
 echo "git clone busybox-1.25"
