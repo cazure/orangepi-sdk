@@ -35,7 +35,7 @@ echo ""
 
 
 message "check installed software ....."
-apt-get install -y -q parted kpartx
+apt-get install -y -q parted kpartx losetup
 
 # Create the disk and partition it
 # We start out at around 2MB so there is room to write u-boot without issues.

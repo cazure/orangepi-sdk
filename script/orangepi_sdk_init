@@ -1,6 +1,43 @@
 #!/bin/bash
+echo "###########################"
+echo "OrangePi SDK inital script "
+echo "###########################"
+
 mkdir -p ./output/rootfs
-mkdir -p ./output/sdcard
+mkdir -p ./output/image
+mkdir -p ./output/image/bootp 
+mkdir -p ./output/image/rootp
 mkdir -p ./output/kernel
 mkdir -p ./output/uboot
 mkdir -p ./output/dtb
+
+echo ""
+echo "install build and compiler software"
+apt-get update 
+apt-get install -y -qq build-essential lsb-core u-boot-tools sunxi-tools pkg-config 
+#
+apt-get install -y -qq device-tree-compiler qemu qemu-user-static debootstrap 
+#
+apt-get install -y -qq libncurses5-dev libssl-dev zlib1g-dev libusb-1.0-0-dev
+#
+echo ""
+echo "git clone gcc-linaro-arm-linux-guneabihf-4.7"
+echo ""
+git clone https://git.oschina.net/cazure/gcc-linaro-arm-linux-guneabihf-4.7.git toolchain/gcc-linaro-arm-linux-guneabihf-4.7
+
+echo ""
+echo "git clone busybox-1.25"
+echo ""
+git clone https://git.oschina.net/cazure/orangepi-busybox.git source/busybox-1.25
+
+echo ""
+echo "git clone u-boot-2016.07"
+echo ""
+git clone https://git.oschina.net/cazure/orangepi-u-boot.git source/u-boot-2016.07
+
+echo ""
+echo "git clone linux-3.4.112"
+echo ""
+git clone https://git.oschina.net/cazure/orangepi-kernel-linux-3.4.x source/linux-3.4.112
+
+
